@@ -188,8 +188,7 @@ TEST(TVector, can_multiply_scalar_by_vector)
 
 TEST(TVector, can_add_vectors_with_equal_size)
 {
-	TVector<int> v1(2);
-	v1[0] = 4;
+	TVector<int> v1(1, 1);
 	v1[1] = 3;
 	TVector<int> v2(2);
 	v2[0] = 8;

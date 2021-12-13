@@ -175,47 +175,65 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-    if (Size != v.Size)
+    if (Size + StartIndex != v.Size + v.StartIndex)
     {
         throw "Not equal size";
     }
-    
-    if (StartIndex != v.StartIndex)
+
+    if (Size >= v.Size)
     {
-        throw "Not equal start index";
+        TVector<ValType> temp(*this);
+        for (int i = 0; i < v.Size; i++)
+        {
+            temp.pVector[i + v.StartIndex - StartIndex] = temp.pVector[i + v.StartIndex - StartIndex] + v.pVector[i];
+        }
+        return temp;
     }
-
-    TVector<ValType> temp(Size, StartIndex);
-
-    for (int i = 0; i < Size; i++)
+    else
     {
-        temp.pVector[i] = this->pVector[i] + v.pVector[i];
+        TVector<ValType> temp(v);
+        for (int i = 0; i < StartIndex - v.StartIndex; i++)
+        {
+            temp.pVector[i] = v.pVector[i];
+        }
+        for (int i = 0; i < Size; i++)
+        {
+            temp.pVector[i + StartIndex - v.StartIndex] = this->pVector[i] + v.pVector[i + StartIndex - v.StartIndex];
+        }
+        return temp;
     }
-
-    return temp;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
-    if (this->Size != v.Size)
+    if (Size + StartIndex != v.Size + v.StartIndex)
     {
         throw "Not equal size";
     }
 
-    if (StartIndex != v.StartIndex)
+    if (Size >= v.Size)
     {
-        throw "Not equal start index";
+        TVector<ValType> temp(*this);
+        for (int i = 0; i < v.Size; i++)
+        {
+            temp.pVector[i + v.StartIndex - StartIndex] = temp.pVector[i + v.StartIndex - StartIndex] - v.pVector[i];
+        }
+        return temp;
     }
-
-    TVector<ValType> temp(Size, StartIndex);
-
-    for (int i = 0; i < Size; i++)
+    else
     {
-        temp.pVector[i] = this->pVector[i] - v.pVector[i];
+        TVector<ValType> temp(v);
+        for (int i = 0; i < StartIndex - v.StartIndex; i++)
+        {
+            temp.pVector[i] = v.pVector[i];
+        }
+        for (int i = 0; i < Size; i++)
+        {
+            temp.pVector[i + StartIndex - v.StartIndex] = v.pVector[i + StartIndex - v.StartIndex] - this->pVector[i];
+        }
+        return temp;
     }
-
-    return temp;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // скалярное произведение

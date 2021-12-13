@@ -32,7 +32,7 @@ void main()
   cout << "Matrix b + a - a - b" << endl << b + a - a - b << endl;
   cout << "Matrix d != (b + a - a - b)" << endl << (d != (b + a - a - b)) << endl << endl;*/
 
-  cout << "Testing of random matrix operators\n";
+  /*cout << "Testing of random matrix operators\n";
   cout << "Enter size: \n";
   size_t size;
   cin >> size;
@@ -89,6 +89,111 @@ void main()
   }
   cout << "Matrix after inverse transformations =\n" << sample << '\n';
   cout << "The original matrix =\n" << temp << '\n';
-  cout << "The original matrix == matrix after inverse transformations: " << (temp == sample) << '\n';
+  cout << "The original matrix == matrix after inverse transformations: " << (temp == sample) << '\n';*/
+    cout << "Testing matrix operators\n";
+    bool flag0 = true;
+    bool flag1 = true;
+    bool flagop = true;
+    while (flag0)
+    {
+        flag1 = true;
+        cout << "Enter size: \n";
+        size_t size;
+        cin >> size;
+        TMatrix<double> sample1(size);
+        TMatrix<double> sample2(size);
+        cout << "Enter (0) your first matrix(A) or create (1) random matrix: \n";
+        size_t check;
+        cin >> check;
+        switch (check)
+        {
+        case 0:
+            cin >> sample1;
+            break;
+
+        case 1: 
+            for (size_t i = 0; i < size; i++)
+                for (size_t j = i; j < size; j++)
+                {
+                    sample1[i][j] = double(rand())/100;
+                }
+            cout << "Matrix A: \n";
+            cout << sample1 << '\n';
+            break;
+
+        default:
+            cout << "Wrong input, try again\n";
+            flag1 = false;
+            flagop = false;
+            break;
+        }
+        while (flag1)
+        {
+            flagop = true;
+            cout << "Enter (0) your second matrix(B) or create (1) random matrix: \n";
+            cin >> check;
+            switch (check)
+            {
+            case 0:
+                cin >> sample2;
+                break;
+            case 1:
+                for (size_t i = 0; i < size; i++)
+                    for (size_t j = i; j < size; j++)
+                    {
+                        sample2[i][j] = double(rand()) / 100;
+                    }
+                cout << "Matrix B: \n";
+                cout << sample2 << '\n';
+                break;
+            default:
+                cout << "Wrong input, try again\n";
+                flagop = false;
+                break;
+            }
+            while (flagop)
+            {
+                cout << "Enter operator (+ or -): \n";
+                char op;
+                cin >> op;
+                switch (op)
+                {
+                default:
+                    cout << "Wrong operator, try again\n";
+                    break;
+                case '+':
+                    cout << "A + B: \n";
+                    sample1 = sample1 + sample2;
+                    cout << sample1 << '\n';
+                    flagop = false;
+                    break;
+                case '-':
+                    cout << "A - B: \n";
+                    sample1 = sample1 - sample2;
+                    cout << sample1 << '\n';
+                    flagop = false;
+                    break;
+                }
+
+                if (!flagop)
+                {
+                    cout << "Start over(0), finish(1), continue with the result(other): \n";
+                    cin >> check;
+                    switch (check)
+                    {
+                    default:
+                        break;
+                    case 0:
+                        flag1 = false;
+                        break;
+                    case 1:
+                        flag0 = false;
+                        flag1 = false;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 //---------------------------------------------------------------------------
