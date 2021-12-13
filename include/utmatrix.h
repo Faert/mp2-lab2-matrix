@@ -192,10 +192,6 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
     else
     {
         TVector<ValType> temp(v);
-        for (int i = 0; i < StartIndex - v.StartIndex; i++)
-        {
-            temp.pVector[i] = v.pVector[i];
-        }
         for (int i = 0; i < Size; i++)
         {
             temp.pVector[i + StartIndex - v.StartIndex] = this->pVector[i] + v.pVector[i + StartIndex - v.StartIndex];
@@ -226,11 +222,11 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
         TVector<ValType> temp(v);
         for (int i = 0; i < StartIndex - v.StartIndex; i++)
         {
-            temp.pVector[i] = v.pVector[i];
+            temp.pVector[i] = v.pVector[i]*(-1);
         }
         for (int i = 0; i < Size; i++)
         {
-            temp.pVector[i + StartIndex - v.StartIndex] = v.pVector[i + StartIndex - v.StartIndex] - this->pVector[i];
+            temp.pVector[i + StartIndex - v.StartIndex] = this->pVector[i] - v.pVector[i + StartIndex - v.StartIndex];
         }
         return temp;
     }
